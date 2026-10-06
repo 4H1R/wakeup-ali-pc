@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Wake up PC</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <main>
+    <h1>Wake up PC</h1>
+
+    <form id="login" hidden>
+      <label for="token">Access token</label>
+      <input id="token" type="password" autocomplete="current-password" required>
+      <button type="submit">Unlock</button>
+      <p id="login-error" class="error" role="alert"></p>
+    </form>
+
+    <section id="panel" hidden>
+      <div class="cards">
+        <div class="card">
+          <span class="label">PC</span>
+          <span id="pc" class="value">…</span>
+          <span id="pc-at" class="sub"></span>
+        </div>
+        <div class="card">
+          <span class="label">Router</span>
+          <span id="router" class="value">…</span>
+          <span id="router-at" class="sub"></span>
+        </div>
+      </div>
+
+      <button id="toggle" class="big" type="button">Wake PC</button>
+      <p id="hint" class="sub"></p>
+
+      <h2>Activity</h2>
+      <ul id="events"></ul>
+
+      <button id="logout" class="link" type="button">Log out</button>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

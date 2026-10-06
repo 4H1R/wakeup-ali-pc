@@ -1,0 +1,37 @@
+services:
+  app:
+    build: .
+    image: wakeup-ali-pc
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+      TRUST_PROXY: "1"
+    volumes:
+      - wakeup-data:/data
+    # Only reachable from the VPS itself (for an existing reverse proxy); Caddy uses the compose network.
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  # Automatic HTTPS (Let's Encrypt) for $DOMAIN. Remove this service if the VPS
+  # already runs a reverse proxy (nginx, Traefik, ...) and point that at 127.0.0.1:3000.
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  wakeup-data:
+  caddy-data:
+  caddy-config:

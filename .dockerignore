@@ -1,0 +1,7 @@
+.env
+.git
+data
+mikrotik
+*.md
+docker-compose.yml
+Caddyfile
